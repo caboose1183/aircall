@@ -3,8 +3,22 @@ import { Fragment, useState, useEffect } from "react";
 
 import axios from "axios";
 
-import { Box, Container, Typography, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  CircularProgress,
+  Avatar,
+  Divider,
+  CardActionArea,
+} from "@mui/material";
+
 import ActivityDetail from "./ActivityDetail.jsx";
+
+import DialpadIcon from "@mui/icons-material/Dialpad";
+import CallIcon from "@mui/icons-material/Call";
+import PersonIcon from "@mui/icons-material/Person";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const moment = require("moment");
 
@@ -14,8 +28,6 @@ export default function Activity(props) {
   const [loading, isLoading] = useState(true);
   const [activities, setActivities] = useState([]);
 
-  let currentTime = null;
-
   useEffect(() => {
     axios
       .get(
@@ -24,8 +36,6 @@ export default function Activity(props) {
       .then((response) => {
         setActivities(response.data.reverse());
         isLoading(false);
-
-        // console.log (moment(Date.parse(response.data[0].created_at)).format('MMMM Do YYYY'))
       })
       .catch((error) => {
         console.log(error);
@@ -33,47 +43,78 @@ export default function Activity(props) {
   }, [view]);
 
   return (
-    <Box
-      sx={{
-        my: "2em",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        maxHeight: 450,
-        overflow: "auto",
-      }}
-    >
-      {loading && <CircularProgress />}
+    <Box>
+      <Box
+        sx={{
+          mt: "2em",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          minHeight: 480,
+          maxHeight: 480,
+          overflow: "auto",
+        }}
+      >
+        {loading && <CircularProgress />}
 
-      {!loading &&
-        activities !== [] &&
-        activities.map((item) => {
-          if (item.created_at !== currentTime) {
+        {!loading &&
+          activities !== [] &&
+          activities.map((item) => {
             return (
-              <Fragment>
-                <Typography>
-                  {moment(Date.parse(item.created_at)).format("MMMM Do YYYY")}
-                </Typography>
-                <ActivityDetail
-                  loading={loading}
-                  activities={activities}
-                ></ActivityDetail>
-              </Fragment>
+              <Box key={item.created_at}>
+                <ActivityDetail activity={item}></ActivityDetail>
+              </Box>
             );
-          } else {
-            return (
-              <Fragment>
-                <Typography>
-                  {moment(Date.parse(item.created_at)).format("MMMM Do YYYY")}
-                </Typography>
-                <ActivityDetail
-                  loading={loading}
-                  activities={activities}
-                ></ActivityDetail>
-              </Fragment>
-            );
-          }
-        })}
+          })}
+      </Box>
+
+      <Divider sx={{ borderBottomWidth: 10 }}></Divider>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <CardActionArea
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: 80,
+          }}
+        >
+          <CallIcon fontSize="large"></CallIcon>
+        </CardActionArea>
+        <Divider orientation="vertical" flexItem />
+        <CardActionArea
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: 80,
+          }}
+        >
+          <PersonIcon fontSize="large"></PersonIcon>
+        </CardActionArea>
+        <Divider orientation="vertical" flexItem />
+        <CardActionArea
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: 80,
+          }}
+        >
+          <DialpadIcon fontSize="large"></DialpadIcon>
+        </CardActionArea>
+        <Divider orientation="vertical" flexItem />
+        <CardActionArea
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            height: 80,
+          }}
+        >
+          <SettingsIcon fontSize="large"></SettingsIcon>
+        </CardActionArea>
+      </Box>
     </Box>
   );
 }
