@@ -9,17 +9,19 @@ import ActiviyDetail from "./ActivityDetail.jsx";
 
 const App = () => {
   const [view, setView] = useState("activity");
+  const [loading, isLoading] = useState(true);
 
   const handleView = (event, newView) => {
     if (newView !== null) {
       setView(newView);
+      isLoading(true)
     }
   };
 
   return (
     <div className="container">
       <Header view={view} handleView={handleView}/>
-      <Activiy></Activiy>
+      <Activiy view={view} loading={loading} isLoading={isLoading}></Activiy>
     </div>
   );
 };

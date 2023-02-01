@@ -23,9 +23,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 const moment = require("moment");
 
 export default function Activity(props) {
-  const { view } = props;
+  const { view, loading, isLoading } = props;
 
-  const [loading, isLoading] = useState(true);
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -34,7 +33,18 @@ export default function Activity(props) {
         "https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/activities"
       )
       .then((response) => {
-        setActivities(response.data.reverse());
+        if (view === "activity") {
+          let newArray = response.data.filter(function (obj) {
+            return obj.is_archived !== false;
+          });
+          setActivities(newArray);
+        } else {
+          let newArray = response.data.filter(function (obj) {
+            return obj.is_archived === false;
+          });
+          setActivities(newArray);
+        }
+
         isLoading(false);
       })
       .catch((error) => {
