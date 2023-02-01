@@ -1,10 +1,9 @@
 import React from "react";
-import { useState } from "react";
 
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 
 const Header = (props) => {
-  const {view, handleView} = props;
+  const { view, handleView } = props;
 
   return (
     <header>
@@ -52,7 +51,7 @@ const Header = (props) => {
         onChange={handleView}
         aria-label="view_choice"
         size="small"
-        sx={{ position: 'relative', right: -200, top: -35 }}
+        sx={{ position: "relative", right: -200, top: -35 }}
       >
         <ToggleButton value="activity" aria-label="activity">
           Activity

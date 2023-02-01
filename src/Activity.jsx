@@ -1,17 +1,9 @@
 import React from "react";
-import { Fragment, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 
-import {
-  Box,
-  Container,
-  Typography,
-  CircularProgress,
-  Avatar,
-  Divider,
-  CardActionArea,
-} from "@mui/material";
+import { Box, CircularProgress, Divider, CardActionArea } from "@mui/material";
 
 import ActivityDetail from "./ActivityDetail.jsx";
 
@@ -20,11 +12,10 @@ import CallIcon from "@mui/icons-material/Call";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-const moment = require("moment");
-
 export default function Activity(props) {
   const { view, loading, isLoading } = props;
 
+  // list of all calls
   const [activities, setActivities] = useState([]);
 
   useEffect(() => {
@@ -72,12 +63,19 @@ export default function Activity(props) {
           activities.map((item) => {
             return (
               <Box key={item.created_at}>
-                <ActivityDetail activity={item}></ActivityDetail>
+                <ActivityDetail
+                  activity={item}
+                  view={view}
+                  isLoading={isLoading}
+                  setActivities={setActivities}
+                  activities={activities}
+                ></ActivityDetail>
               </Box>
             );
           })}
       </Box>
 
+      {/* bottom navbar */}
       <Divider sx={{ borderBottomWidth: 10 }}></Divider>
       <Box
         sx={{
@@ -89,37 +87,40 @@ export default function Activity(props) {
           sx={{
             display: "flex",
             justifyContent: "center",
-            height: 80,
+            height: 70,
           }}
         >
           <CallIcon fontSize="large"></CallIcon>
         </CardActionArea>
+
         <Divider orientation="vertical" flexItem />
         <CardActionArea
           sx={{
             display: "flex",
             justifyContent: "center",
-            height: 80,
+            height: 70,
           }}
         >
           <PersonIcon fontSize="large"></PersonIcon>
         </CardActionArea>
+
         <Divider orientation="vertical" flexItem />
         <CardActionArea
           sx={{
             display: "flex",
             justifyContent: "center",
-            height: 80,
+            height: 70,
           }}
         >
           <DialpadIcon fontSize="large"></DialpadIcon>
         </CardActionArea>
+
         <Divider orientation="vertical" flexItem />
         <CardActionArea
           sx={{
             display: "flex",
             justifyContent: "center",
-            height: 80,
+            height: 70,
           }}
         >
           <SettingsIcon fontSize="large"></SettingsIcon>
