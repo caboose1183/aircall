@@ -5,7 +5,6 @@ import { useState } from "react";
 
 import Header from "./Header.jsx";
 import Activiy from "./Activity.jsx";
-import ActiviyDetail from "./ActivityDetail.jsx";
 
 const App = () => {
   const [view, setView] = useState("activity");

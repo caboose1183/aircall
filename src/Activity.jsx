@@ -37,12 +37,12 @@ export default function Activity(props) {
           let newArray = response.data.filter(function (obj) {
             return obj.is_archived !== false;
           });
-          setActivities(newArray);
+          setActivities(newArray.reverse());
         } else {
           let newArray = response.data.filter(function (obj) {
             return obj.is_archived === false;
           });
-          setActivities(newArray);
+          setActivities(newArray.reverse());
         }
 
         isLoading(false);

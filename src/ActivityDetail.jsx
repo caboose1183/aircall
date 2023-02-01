@@ -1,6 +1,8 @@
 import React from "react";
 import { Fragment, useState, useEffect } from "react";
 
+import axios from "axios";
+
 import {
   Box,
   Typography,
@@ -25,6 +27,20 @@ export default function ActivityDetail(props) {
 
   const onDetailsClick = () => {
     setChecked((prev) => !prev);
+  };
+
+  const onArchiveClick = (id) => {
+    axios
+      .patch(
+        `https://charming-bat-singlet.cyclic.app/https://cerulean-marlin-wig.cyclic.app/activities/${id}`,
+        { is_archived: true }
+      )
+      .then((response) => {
+        console.log("success");
+      })
+      .catch((error) => {
+        console.log("error");
+      });
   };
 
   return (
@@ -84,7 +100,7 @@ export default function ActivityDetail(props) {
               </Box>
             </CardActionArea>
             <Divider orientation="vertical" flexItem></Divider>
-            <CardActionArea>
+            <CardActionArea onClick={() => {onArchiveClick(activity.id)}}>
               <Box
                 sx={{
                   display: "flex",
